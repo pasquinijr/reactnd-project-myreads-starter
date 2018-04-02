@@ -1,13 +1,19 @@
 import React from 'react'
 import { Route } from 'react-router-dom';
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
 
 class BooksApp extends React.Component {
   state = {
+    books: []
+  }
 
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books });
+    });
   }
 
   render() {
@@ -16,7 +22,11 @@ class BooksApp extends React.Component {
         <Route
           exact
           path="/"
-          component={MainPage}
+          render={() => (
+            <MainPage
+              books={this.state.books}
+            />
+          )}
         />
         <Route
           path="/search"
