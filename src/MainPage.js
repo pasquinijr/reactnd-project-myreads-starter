@@ -4,22 +4,26 @@ import Book from './Book';
 
 class MainPage extends Component {
 
-  render() {
-    let currentlyReading = [];
-    let wantToRead = [];
-    let read = [];
-    let none = [];
-    for (let book of this.props.books) {
-      if (book.shelf === 'currentlyReading') {
-        currentlyReading.push(book);
-      } else if (book.shelf === 'wantToRead') {
-        wantToRead.push(book);
-      } else if (book.shelf === 'read') {
-        read.push(book);
-      } else {
-        none.push(book);
-      }
+  /*
+    In a future release, this variable could became a state, so that
+    the user could add and remove shelves.
+  */
+  shelves = [
+    {
+      key: 'currentlyReading',
+      name: 'Currently Reading'
+    },
+    {
+      key: 'wantToRead',
+      name: 'Want to Read'
+    },
+    {
+      key: 'read',
+      name: 'Read'
     }
+  ]
+
+  render() {
 
     return (
       <div className="list-books">
@@ -28,54 +32,26 @@ class MainPage extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {currentlyReading.map((book) => (
-                    <li key={book.id}>
-                      <Book
-                        title={book.title}
-                        authors={book.authors}
-                        thumbnail={book.imageLinks.thumbnail}
-                      />
-                    </li>
-                  ))}
-                </ol>
+            {this.shelves.map(shelf => (
+              <div key={shelf.key} className="bookshelf">
+                <h2 className="bookshelf-title">{shelf.name}</h2>
+                <div className="bookshelf-books">
+                  <ol className="books-grid">
+                    {this.props.books
+                      .filter((book) => book.shelf === shelf.key)
+                      .map((book) => (
+                      <li key={book.id}>
+                        <Book
+                          title={book.title}
+                          authors={book.authors}
+                          thumbnail={book.imageLinks.thumbnail}
+                        />
+                      </li>
+                    ))}
+                  </ol>
+                </div>
               </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                {wantToRead.map((book) => (
-                  <li key={book.id}>
-                    <Book
-                      title={book.title}
-                      authors={book.authors}
-                      thumbnail={book.imageLinks.thumbnail}
-                    />
-                  </li>
-                ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                {read.map((book) => (
-                  <li key={book.id}>
-                    <Book
-                      title={book.title}
-                      authors={book.authors}
-                      thumbnail={book.imageLinks.thumbnail}
-                    />
-                  </li>
-                ))}
-                </ol>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="open-search">
