@@ -19,7 +19,9 @@ const Book = (props) => (
       </div>
     </div>
     <div className="book-title">{props.title}</div>
-    <div className="book-authors">{props.authors}</div>
+    {props.authors.map((author) => (
+      <div key={author} className="book-authors">{author}</div>
+    ))}
   </div>
 )
 

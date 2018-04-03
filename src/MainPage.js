@@ -36,7 +36,7 @@ class MainPage extends Component {
                     <li key={book.id}>
                       <Book
                         title={book.title}
-                        authors={book.authors[0]}
+                        authors={book.authors}
                         thumbnail={book.imageLinks.thumbnail}
                       />
                     </li>
@@ -52,7 +52,7 @@ class MainPage extends Component {
                   <li key={book.id}>
                     <Book
                       title={book.title}
-                      authors={book.authors[0]}
+                      authors={book.authors}
                       thumbnail={book.imageLinks.thumbnail}
                     />
                   </li>
@@ -68,7 +68,7 @@ class MainPage extends Component {
                   <li key={book.id}>
                     <Book
                       title={book.title}
-                      authors={book.authors[0]}
+                      authors={book.authors}
                       thumbnail={book.imageLinks.thumbnail}
                     />
                   </li>
