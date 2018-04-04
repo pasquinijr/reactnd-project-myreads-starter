@@ -42,9 +42,8 @@ class MainPage extends Component {
                       .map((book) => (
                       <li key={book.id}>
                         <Book
-                          title={book.title}
-                          authors={book.authors}
-                          thumbnail={book.imageLinks.thumbnail}
+                          book={book}
+                          onShelfChange={(book, shelf) => this.props.onShelfChange(book, shelf)}
                         />
                       </li>
                     ))}
