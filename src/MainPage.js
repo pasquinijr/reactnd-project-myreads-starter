@@ -21,10 +21,10 @@ class MainPage extends Component {
       key: 'read',
       name: 'Read'
     }
-  ]
+  ];
+
 
   render() {
-
     return (
       <div className="list-books">
         <div className="list-books-title">

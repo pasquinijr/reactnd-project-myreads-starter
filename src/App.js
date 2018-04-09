@@ -13,8 +13,6 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
-    }).then(() => {
-      console.log(this.state.books);
     })
   }
 
@@ -22,22 +20,24 @@ class BooksApp extends React.Component {
     Credits to @fOntana for logic of my handle method below
   */
   handleShelfChange = (book, shelf) => {
+    let newBooks = [...this.state.books];
+    // add new book to state
     const bookInShelf = this.state.books.find(item => item.id === book.id);
     if (!bookInShelf) {
-      this.setState((prevState) => ({
-        books: [...prevState.books, book]
-      }))
+      newBooks = [...newBooks, book]
     }
+    // update local storage
     BooksAPI.update(book, shelf).then( response => {
-      const newBooks = this.state.books.map(item => {
+      newBooks = newBooks.map(item => {
         if (item.id === book.id) {
           item.shelf = shelf;
         }
         return item;
-      });
-      this.setState({ books: newBooks });
-      // TODO: remove from state if shelf is none
-    });
+      })
+      // remove from state if shelf is none
+    }).then(() => {
+      this.setState({ books: newBooks.filter(item => item.shelf !== 'none') });
+    })
   };
 
   render() {

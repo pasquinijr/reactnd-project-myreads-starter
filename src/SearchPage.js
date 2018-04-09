@@ -17,9 +17,6 @@ class SearchPage extends Component {
         .then(results => {
           this.setState({ results })
         })
-        .then(() => {
-          console.log(this.state.results);
-        })
     }
   }
 
@@ -57,15 +54,21 @@ class SearchPage extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {this.state.results && this.state.results
-              .map((result) => (
-                <li key={result.id}>
-                  <Book
-                    books={this.props.books}
-                    book={result}
-                    onShelfChange={(result, shelf) => this.props.onShelfChange(result, shelf)}
-                  />
-                </li>
-              )
+              .map((result) => {
+                const isInBookShelf = this.props.books.find((item => item.id === result.id));
+                if (isInBookShelf) {
+                  result.shelf = isInBookShelf.shelf;
+                } else {
+                  result.shelf = 'none';
+                }
+                return (
+                  <li key={result.id}>
+                    <Book
+                      book={result}
+                      onShelfChange={(result, shelf) => this.props.onShelfChange(result, shelf)}
+                    />
+                  </li>
+              )}
             )}
           </ol>
         </div>
