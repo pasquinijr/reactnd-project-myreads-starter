@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Book from './Book';
 
-class MainPage extends Component {
+class BookShelf extends Component {
 
   /*
     In a future release, this variable could became a state, so that
@@ -65,4 +65,4 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+export default BookShelf;

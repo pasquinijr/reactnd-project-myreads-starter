@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
-import MainPage from './MainPage';
+import BookShelf from './BookShelf';
 import SearchPage from './SearchPage';
 
-class BooksApp extends React.Component {
+class App extends Component {
   state = {
     books: []
   }
@@ -47,7 +47,7 @@ class BooksApp extends React.Component {
           exact
           path="/"
           render={() => (
-            <MainPage
+            <BookShelf
               books={this.state.books}
               onShelfChange={(book, shelf) => this.handleShelfChange(book, shelf)}
             />
@@ -67,4 +67,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp
+export default App;

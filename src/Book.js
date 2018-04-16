@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Book = props => (
   <div className="book">
     <div className="book-top">
       <div
         className="book-cover"
-        style={{ width: 128, height: 192, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}
+        style={{ width: 128, height: 192, backgroundImage: `url(${props.book.imageLinks.thumbnail})`, }}
       />
       <div className="book-shelf-changer">
         <select
@@ -27,5 +28,10 @@ const Book = props => (
   </div>
 
 );
+
+Book.propTypes = {
+  book: PropTypes.instanceOf(Book).isRequired,
+  onShelfChange: PropTypes.func.isRequired,
+};
 
 export default Book;
