@@ -7,12 +7,18 @@ import SearchPage from './SearchPage';
 
 class App extends Component {
   state = {
-    books: []
+    books: [],
+    waiting: true
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books });
+      this.setState(
+        {
+          books,
+          waiting: false
+        }
+      );
     })
   }
 
@@ -20,6 +26,7 @@ class App extends Component {
     Credits to @fOntana for logic of my handle method below
   */
   handleShelfChange = (book, shelf) => {
+    this.setState({ waiting: true });
     let newBooks = [...this.state.books];
     // add new book to state
     const bookInShelf = this.state.books.find(item => item.id === book.id);
@@ -36,13 +43,19 @@ class App extends Component {
       })
       // remove from state if shelf is none
     }).then(() => {
-      this.setState({ books: newBooks.filter(item => item.shelf !== 'none') });
+      this.setState(
+        {
+          books: newBooks.filter(item => item.shelf !== 'none'),
+          waiting: false
+        }
+      );
     })
   };
 
   render() {
     return (
       <div className="app">
+      {this.state.waiting && <div className="spinner"/>}
         <Route
           exact
           path="/"
