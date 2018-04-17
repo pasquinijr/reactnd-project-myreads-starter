@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from '../BooksAPI'
 import Book from './Book';
+import BookClass from '../classes/BookClass';
 
 class SearchPage extends Component {
   state = {
@@ -15,7 +16,7 @@ class SearchPage extends Component {
     if (query) {
       BooksAPI.search(query)
         .then(results => {
-          this.setState({ results })
+          this.setState({ results: results.map(book => new BookClass(book.id, book.title, book.authors, book.imageLinks.thumbnail, book.shelf)) })
         })
     }
   }
