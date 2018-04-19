@@ -1,3 +1,3 @@
 # How to contribute
 
-The files in this repository are used in the course videos and are the starting point for all students. Because we want all students to have the same experience going through course, if your pull request alters any of the core files, then it (most likely) will _not_ be merged into the project.
+This project was developed as part of a React course from [Udacity](www.udacity.com) and, therefore, for learning purpose only. No further development is planned for the future. Any contribution might be considered only for my own learning purpose, and it might not be included in the project.

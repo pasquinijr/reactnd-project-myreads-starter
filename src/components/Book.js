@@ -1,3 +1,9 @@
+/**
+* @description The book react stateless component
+* @prop {Book} book - The book object
+* @prop {function} onShelfChange - Function to move a book from one shelf to another
+*/
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import BookClass from '../classes/BookClass';

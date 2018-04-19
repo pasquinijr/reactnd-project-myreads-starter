@@ -1,4 +1,6 @@
 {
+  "name": "reactnd-project-myreads-starter",
+  "version": "1.2.0",
   "dependencies": {
     "npm": "^5.8.0",
     "prop-types": "^15.6.1",

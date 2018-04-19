@@ -1,3 +1,7 @@
+/**
+* @description The main component
+*/
+
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
@@ -8,15 +12,23 @@ import BookClass from './classes/BookClass';
 
 class App extends Component {
   state = {
-    books: [],
-    waiting: true
+    books: [],           // the array of books in the bookshelf
+    waiting: true        // boolean used to display a spinner on screen ...
+                         // ... during API calls
   }
 
   componentDidMount() {
+    // get all books that should appear in the bookshelf as soon as the
+    // component mounts on screen
     BooksAPI.getAll().then((books) => {
       this.setState(
         {
-          books: books.map(book => new BookClass(book.id, book.title, book.authors, book.imageLinks.thumbnail, book.shelf)),
+          books: books.map(book => new BookClass(
+            book.id,
+            book.title,
+            book.authors,
+            book.imageLinks,
+            book.shelf)),
           waiting: false
         }
       );
@@ -24,17 +36,25 @@ class App extends Component {
   }
 
   /*
-    Credits to @fOntana for logic of my handle method below
+    Credits to @fOntana for part of the logic below!
   */
   handleShelfChange = (book, shelf) => {
+    // turn on spinner
     this.setState({ waiting: true });
+
+    // variable newBooks to receive the latest list of books to be in the bookshelf
     let newBooks = [...this.state.books];
-    // add new book to state
+
+    // check if book is already in the bookshelf
     const bookInShelf = this.state.books.find(item => item.id === book.id);
+
+    // if not, the book is coming from the search page and should be added to the
+    // newBooks array
     if (!bookInShelf) {
       newBooks = [...newBooks, book]
     }
-    // update local storage
+
+    // calls the update API to set the book's shelf attribute
     BooksAPI.update(book, shelf).then( response => {
       newBooks = newBooks.map(item => {
         if (item.id === book.id) {
@@ -42,7 +62,8 @@ class App extends Component {
         }
         return item;
       })
-      // remove from state if shelf is none
+
+      // remove book from the books state if shelf is 'none'
     }).then(() => {
       this.setState(
         {

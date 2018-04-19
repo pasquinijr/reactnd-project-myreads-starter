@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
+/**
+* @description The bookshelf react component
+* @prop {Book} books - The array of book objects
+* @prop {function} onShelfChange - Function to move a book from one shelf to another
+*/
+
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import BookClass from '../classes/BookClass';
 import Book from './Book';
 
-class BookShelf extends Component {
+class BookShelf extends PureComponent {
 
   /*
     In a future release, this variable could became a state, so that
@@ -23,8 +31,8 @@ class BookShelf extends Component {
     }
   ];
 
-
   render() {
+    const { onShelfChange, books } = this.props;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -38,13 +46,13 @@ class BookShelf extends Component {
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     {
-                      this.props.books
+                      books
                       .filter((book) => book.shelf === shelf.key)
                       .map((book) => (
                       <li key={book.id}>
                         <Book
                           book={book}
-                          onShelfChange={(book, shelf) => this.props.onShelfChange(book, shelf)}
+                          onShelfChange={(book, shelf) => onShelfChange(book, shelf)}
                         />
                       </li>
                     ))}
@@ -65,5 +73,10 @@ class BookShelf extends Component {
     );
   }
 }
+
+Book.propTypes = {
+  book: PropTypes.instanceOf(BookClass).isRequired,
+  onShelfChange: PropTypes.func.isRequired,
+};
 
 export default BookShelf;
